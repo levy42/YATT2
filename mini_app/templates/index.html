@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GAMES</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h3 class="h1">TOTAL number of games: {{ total }}</h3>
+        <div class="col-6">
+            <form action=".">
+                <div class="input-group">
+                    <span>Search keywords (space separated):</span>
+                    <input class="form-control" placeholder="SEARCH keywords" name="search_keywords"
+                           value="{{ request.args.get('search_keywords','') }}">
+                </div>
+                <hr>
+                <div class="input-group">
+                    <span>Search exact name :</span>
+                    <input class="form-control" placeholder="SEARCH name" name="search"
+                           value="{{ request.args.get('search','') }}">
+                </div>
+                <hr>
+                <div>
+                    <input class="btn btn-success" type="submit">
+                </div>
+            </form>
+        </div>
+
+        <hr>
+        <ul class="list-group">
+            {% for game in games %}
+            <li class="list-group-item">{{ game }}</li>
+            {% endfor %}
+        </ul>
+        {% if request.args.get('page', 1)|int > 1 %}
+        <a href=".?page={{ request.args.get('page', 1)|int - 1 }}">PREV</a>
+        {% endif %}
+        {% if has_next %}
+        <a href=".?page={{ request.args.get('page', 1)|int + 1 }}">NEXT</a>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
